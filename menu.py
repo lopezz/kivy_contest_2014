@@ -1,7 +1,9 @@
 from kivy.uix.widget import Widget
 
-class MenuWidget(Widget):
+class Menu(Widget):
+
     def play_game(self):
-        pass
+		pass
+	
     def show_settings(self):
-        pass
+		pass
