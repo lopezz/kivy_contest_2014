@@ -7,4 +7,3 @@ class ChiliGrid(GridLayout):
     
     def add_card(self, card):
         self.add_widget(card)
-        

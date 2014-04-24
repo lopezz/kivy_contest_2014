@@ -1,18 +1,21 @@
 from kivy.uix.widget import Widget
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
-from chili_card import ChiliWordCard
+from chili_card import ChiliWordCard, ChiliImageCard
 
 class ChiliPairsGame(Widget):
 
     chiligrid = ObjectProperty(None)
+    
 
     def new_game(self):
         ''' Sets a new game and starts it '''
         # TODO reset values
         self.chiligrid.clear_widgets()
         for i in range(4 * 6):
-            self.chiligrid.add_widget(ChiliWordCard(text='Test card'))
+            #self.chiligrid.add_card(ChiliWordCard(text='Test card'))
+            self.chiligrid.add_card(ChiliImageCard(img='img/pear.png'))
+            #self.chiligrid.add_card(ChiliSoundCard(img='ruta'))
             
         self.play()
 

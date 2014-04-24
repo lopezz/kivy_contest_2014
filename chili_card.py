@@ -7,6 +7,7 @@ There are three types:
 
 from kivy.uix.widget import Widget
 from kivy.uix.label import Label
+from kivy.uix.image import Image
 from kivy.uix.button import ButtonBehavior
 from kivy.properties import BooleanProperty, ListProperty, StringProperty, ObjectProperty
 
@@ -35,7 +36,7 @@ class ChiliCard(ButtonBehavior, Widget):
 
     def flip(self):
         ''' Flip the card '''
-        print "flip"
+        #print "flip"
         self.status = not self.status # Change status
         if self.status:
             # Show contents
@@ -54,17 +55,20 @@ class ChiliCard(ButtonBehavior, Widget):
 
 
 
-
 class ChiliImageCard(ChiliCard):
-    img = StringProperty('') # path of image
-    pass
+    back_color=ListProperty(OBJECT_COLOR)
+    def __init__(self, *args, **kwargs):
+        super(ChiliImageCard, self).__init__(*args, **kwargs)
+        self.front_widget = Image(source=kwargs['img'])
+        
 
 class ChiliWordCard(ChiliCard):
-    
+    back_color=ListProperty(WORD_COLOR)
     def __init__(self, *args, **kwargs):
         super(ChiliWordCard, self).__init__(*args, **kwargs)
         self.front_widget = Label(text=kwargs['text'], pos=self.pos, size=self.size)
 
 class ChiliSoundCard(ChiliCard):
+    back_color=ListProperty(SOUND_COLOR)
     img = StringProperty('') # path of sound
     pass
