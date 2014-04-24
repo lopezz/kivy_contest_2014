@@ -1,1 +1,29 @@
-#nada nada
+<ChiliPairsGame>:
+    chiligrid: _chiligrid
+
+    ChiliGrid:
+        id: _chiligrid
+
+<ChiliGrid>:
+    spacing: 5
+    size: 800, 600
+    gridsize: 4, 6
+
+<ChiliCard>:
+    size: 100, 100
+    back_widget: _back
+
+    Button:
+        id: _back
+        pos: root.pos
+        size: root.size
+        on_press: root.flip()
+
+        canvas:
+            
+            Color:
+                rgba: root.back_color
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: root.back_img
