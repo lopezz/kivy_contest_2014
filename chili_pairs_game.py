@@ -33,13 +33,22 @@ class ChiliPairsGame(Widget):
         ''' Reads and loads the cards for the cvs file '''
         cards= open(self.setlists[set_id][1])
         read_cards = list(csv.reader(cards))        
-        c=0
-        # the set will load 4 times (there's 6 cards in fruits.csv)   
+        cards_to_add=list()
+        # the set will load 4 times (there's 6 cards in fruits.csv)
         for i in range(4):
             for row in read_cards:
                 cword, cimg = row
-                self.chiligrid.add_card(ChiliWordCard(text=cword, value=cword))
-                self.chiligrid.add_card(ChiliImageCard(img=cimg, value=cword))
+                cards_to_add.append([cword, cword, 'word'])
+                cards_to_add.append([cimg, cword, 'image'])
+                #TODO add 'soud' cards
+        random.shuffle(cards_to_add)
+        for card in cards_to_add:
+            if card[2]=='word':
+                self.chiligrid.add_card(ChiliWordCard(text=card[0], value=card[1]))
+            elif card[2]=='image':
+                self.chiligrid.add_card(ChiliImageCard(img=card[0], value=card[1]))
+            else:
+                pass #TODO self.chiligrid.add_card(ChiliSoundCard()
 
         cards.close()
 
