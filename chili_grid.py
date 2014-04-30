@@ -2,6 +2,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.properties import ReferenceListProperty, NumericProperty, BooleanProperty, ObjectProperty
 from chili_card import ChiliCard
 from constants import UNFLIPPED, FLIPPED, GUESSED, MAX_FLIPPED_CARDS
+from kivy.clock import Clock
 
 
 class ChiliGrid(GridLayout):
@@ -39,22 +40,14 @@ class ChiliGrid(GridLayout):
             print "MAX FLIPPED"
             #user flipped all the allowed number of cards
             self.can_flip_cards = False  # No more flips allowed
-            r = self.match_cards()
-            if r:
-                # Guess all cards in trio
-                self.guess_cards()
-                self.can_flip_cards = True
-            else:
-                # Unflip all cards
-                self.unflip_cards()
-            self.last_match = r
-            self.chiligame.cards_matched(self.last_match)
-             
+            Clock.schedule_once(self.match_cards, 0.5)
+                         
 
     def unflip_cards(self):
         cards = [c for c in self.flipped_cards]  # We need a copy because
                                                  # flipped_cards changes
                                                  # inside 'for' statement.
+        print "unflipping all cards"
         for card in cards:
             card.unflip()
 
@@ -63,11 +56,23 @@ class ChiliGrid(GridLayout):
         for card in cards:
             card.guess()
 
-    def match_cards(self):
+    def match_cards(self, t=0):
         c1, c2, c3 = self.flipped_cards
+        r = False
         if c1.value == c2.value == c3.value:
             # Mark cards as guessed
             print "guessed"
-            return True
-        print "not"
-        return False
+            r = True
+            # Guess all cards in trio
+            self.guess_cards()
+
+        else:
+            print "not"
+            # Unflip all cards
+            self.unflip_cards()
+
+        self.can_flip_cards = True
+        self.last_match = r
+        self.chiligame.cards_matched(self.last_match)
+
+        return r
