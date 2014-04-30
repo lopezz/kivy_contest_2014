@@ -10,7 +10,7 @@ from kivy.uix.label import Label
 from kivy.uix.image import Image
 from kivy.uix.button import ButtonBehavior
 from kivy.properties import BooleanProperty, ListProperty, StringProperty, ObjectProperty, OptionProperty
-from constants import NONE_COLOR, OBJECT_COLOR, WORD_COLOR, SOUND_COLOR, UNFLIPPED, FLIPPED, GUESSED
+from constants import NONE_COLOR, OBJECT_COLOR, WORD_COLOR, SOUND_COLOR, UNFLIPPED, FLIPPED, GUESSED, BGCOLOR_NORMAL, BGCOLOR_GUESSED
 
 
 class ChiliCard(Widget):
@@ -25,6 +25,7 @@ class ChiliCard(Widget):
     value = StringProperty('')
     front_widget = ObjectProperty(None)
     chiligrid = Widget.parent
+    bgcolor = ListProperty(BGCOLOR_NORMAL)
 
     def __init__(self, *args, **kwargs):
         super(ChiliCard, self).__init__(*args, **kwargs)
@@ -50,7 +51,10 @@ class ChiliCard(Widget):
         self.remove_widget(self.front_widget)
         self.add_widget(self.back_widget)
     
-
+    def guess(self):
+        print "card GUESSED"
+        self.bgcolor = BGCOLOR_GUESSED
+        self.status = GUESSED
 
     def update_pos(self, o, value):
         self.front_widget.pos = value

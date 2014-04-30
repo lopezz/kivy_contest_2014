@@ -3,6 +3,7 @@
 
     ChiliGrid:
         id: _chiligrid
+        chiligame: root
 
 <ChiliGrid>:
     spacing: 5
@@ -12,6 +13,12 @@
 <ChiliCard>:
     size: 100, 100
     back_widget: _back
+    canvas:
+        Color:
+            rgba: self.bgcolor
+        Rectangle:
+            size: self.size
+            pos: self.pos
 
     Button:
         id: _back

@@ -18,7 +18,6 @@ class ChiliPairsGame(Widget):
             set_name=i.split('.')[0]
             self.setlists.append([set_name, path])
         print self.setlists
-        
 
 
     def new_game(self):
@@ -65,4 +64,8 @@ class ChiliPairsGame(Widget):
 
     def hides_menu(self):
         ''' Hides main menu '''
+        pass
+
+    def cards_matched(self, value):
+        print "cards matched", value
         pass
