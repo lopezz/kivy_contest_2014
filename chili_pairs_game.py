@@ -37,13 +37,10 @@ class ChiliPairsGame(Widget):
         # the set will load 4 times (there's 6 cards in fruits.csv)   
         for i in range(4):
             for row in read_cards:
-                for col in row:
-                    if c==0:
-                        self.chiligrid.add_card(ChiliWordCard(text=col))
-                        c=1
-                    else:
-                        self.chiligrid.add_card(ChiliImageCard(img=col))
-                        c=0
+                cword, cimg = row
+                self.chiligrid.add_card(ChiliWordCard(text=cword, value=cword))
+                self.chiligrid.add_card(ChiliImageCard(img=cimg, value=cword))
+
         cards.close()
 
     def play(self):

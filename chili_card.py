@@ -30,6 +30,7 @@ class ChiliCard(Widget):
     def __init__(self, *args, **kwargs):
         super(ChiliCard, self).__init__(*args, **kwargs)
 
+        self.value = kwargs['value']
         self.bind(pos=self.update_pos)
         self.bind(size=self.update_size)
 
@@ -41,15 +42,19 @@ class ChiliCard(Widget):
 
         print "flip"
         self.flip_by_user = by_user
-        self.status = FLIPPED
         # Show contents
         self.remove_widget(self.back_widget)
         self.add_widget(self.front_widget)
+        self.status = FLIPPED
     
     def unflip(self):
-        self.status = UNFLIPPED
+        print "UNFLIP"
+
+        #import pdb
+        #pdb.set_trace()
         self.remove_widget(self.front_widget)
         self.add_widget(self.back_widget)
+        self.status = UNFLIPPED
     
     def guess(self):
         print "card GUESSED"
