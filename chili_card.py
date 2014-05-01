@@ -9,6 +9,7 @@ from kivy.uix.widget import Widget
 from kivy.uix.label import Label
 from kivy.uix.image import Image
 from kivy.uix.button import ButtonBehavior
+from kivy.core.audio import SoundLoader
 from kivy.properties import BooleanProperty, ListProperty, StringProperty, ObjectProperty, OptionProperty
 from constants import NONE_COLOR, OBJECT_COLOR, WORD_COLOR, SOUND_COLOR, UNFLIPPED, FLIPPED, GUESSED, BGCOLOR_NORMAL, BGCOLOR_GUESSED
 
@@ -40,7 +41,7 @@ class ChiliCard(Widget):
         if not self.chiligrid.can_flip_cards:
             return
 
-        print "flip"
+        print "flip", self.value
         self.flip_by_user = by_user
         # Show contents
         self.remove_widget(self.back_widget)
@@ -55,7 +56,7 @@ class ChiliCard(Widget):
         self.remove_widget(self.front_widget)
         self.add_widget(self.back_widget)
         self.status = UNFLIPPED
-    
+
     def guess(self):
         print "card GUESSED"
         self.bgcolor = BGCOLOR_GUESSED
@@ -84,5 +85,19 @@ class ChiliWordCard(ChiliCard):
 
 class ChiliSoundCard(ChiliCard):
     back_color=ListProperty(SOUND_COLOR)
-    img = StringProperty('') # path of sound
-    pass
+    card_sound=''
+    def __init__(self, *args, **kwargs):
+        super(ChiliSoundCard, self).__init__(*args, **kwargs)
+        self.front_widget = Image(source='img/sound.png')
+        self.card_sound=kwargs['sound']
+        
+    
+    def play_sound(self):
+        sound=SoundLoader.load(self.card_sound)
+        sound.play()
+        print "SOOOUND!!!!"
+
+    def flip(self, by_user=True):
+        ''' Flip the card '''
+        super(ChiliSoundCard, self).flip(by_user)
+        self.play_sound()

@@ -2,7 +2,7 @@ import csv, os, random
 from kivy.uix.widget import Widget
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty, NumericProperty
-from chili_card import ChiliImageCard, ChiliWordCard
+from chili_card import ChiliImageCard, ChiliWordCard, ChiliSoundCard
 
 
 class ChiliPairsGame(Widget):
@@ -34,16 +34,16 @@ class ChiliPairsGame(Widget):
         cards= open(self.setlists[set_id][1])
         read_cards = list(csv.reader(cards))        
         cards_to_add=list()
-        
-        # the set will load 4 times (there's 6 cards in fruits.csv)
-        for i in range(4):
-            for row in read_cards:
-                cword, cimg = row
-                cards_to_add.append(ChiliWordCard(text=cword, value=cword))
-                cards_to_add.append(ChiliImageCard(img=cimg, value=cword))
-                #TODO cards_to_add.append(ChiliSoundCard())
 
+        for row in read_cards:
+            cword, cimg, csound = row
+            cards_to_add.append(ChiliWordCard(text=cword, value=cword))
+            cards_to_add.append(ChiliImageCard(img=cimg, value=cword))
+            cards_to_add.append(ChiliSoundCard(sound=csound, value=cword))
+        
+        #shuffle the cards in order to randomize their location
         random.shuffle(cards_to_add)
+        
         for card in cards_to_add:
             self.chiligrid.add_card(card)
         cards.close()
