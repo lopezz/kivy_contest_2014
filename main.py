@@ -1,8 +1,16 @@
+import os
+os.environ['KIVY_AUDIO'] = 'pygame'  # Always use pygame
 from kivy.app import App
 from chili_pairs_game import ChiliPairsGame
 from chili_grid import ChiliGrid
 from chili_card import ChiliCard
 from kivy.factory import Factory
+
+# Fixes pygame_audio high_pitched sound
+from kivy.core.audio.audio_pygame import mixer
+mixer.quit()
+mixer.pre_init(16384, -16, 2, 1024) # Changed 44100 to 16384
+mixer.init()
 
 class ChiliPairsApp(App):
     def build(self):
