@@ -90,14 +90,19 @@ class ChiliSoundCard(ChiliCard):
         super(ChiliSoundCard, self).__init__(*args, **kwargs)
         self.front_widget = Image(source='img/sound.png')
         self.card_sound=kwargs['sound']
-        
+
+    def flip(self, by_user=True):
+        ''' Flip the card '''
+        super(ChiliSoundCard, self).flip(by_user)
+        self.play_sound()     
     
     def play_sound(self):
         sound=SoundLoader.load(self.card_sound)
         sound.play()
         print "SOOOUND!!!!"
 
-    def flip(self, by_user=True):
-        ''' Flip the card '''
-        super(ChiliSoundCard, self).flip(by_user)
-        self.play_sound()
+    def on_touch_up(self, touch):   
+        if self.status==FLIPPED and self.collide_point(touch.x, touch.y):
+            self.play_sound()
+        else:
+            pass
