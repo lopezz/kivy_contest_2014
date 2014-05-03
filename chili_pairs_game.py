@@ -1,11 +1,10 @@
 import csv, os, random
-from kivy.uix.widget import Widget
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty, NumericProperty
 from chili_card import ChiliImageCard, ChiliWordCard, ChiliSoundCard
 
 
-class ChiliPairsGame(Widget):
+class ChiliPairsGame(BoxLayout):
 
     chiligrid = ObjectProperty(None)
     setlists= list()

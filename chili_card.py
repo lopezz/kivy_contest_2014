@@ -103,7 +103,9 @@ class ChiliSoundCard(ChiliCard):
             print "SOOOUND!!!!"
 
     def on_touch_up(self, touch):   
-        if self.status==FLIPPED and self.collide_point(touch.x, touch.y):
+        if (self.status==FLIPPED or self.status==GUESSED) \
+        and self.collide_point(touch.x, touch.y):           # Play only if the card is
+                                                            # already flipped
             self.play_sound()
         else:
             pass

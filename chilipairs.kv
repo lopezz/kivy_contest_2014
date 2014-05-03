@@ -1,5 +1,19 @@
 <ChiliPairsGame>:
+    orientation: 'vertical'
     chiligrid: _chiligrid
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint: 1, 0.1
+        spacing: 10
+        Label:
+            font_size: 20
+            text: 'Set Actual Nombre... si'
+
+
+        Label:
+            font_size: 20
+            text: 'Time 01:30'
 
     ChiliGrid:
         id: _chiligrid
@@ -7,7 +21,8 @@
 
 <ChiliGrid>:
     spacing: 5
-    size: 800, 600
+    # size: 800, 600
+    size_hint: 1, 0.9 
     gridsize: 4, 6
 
 <ChiliCard>:
