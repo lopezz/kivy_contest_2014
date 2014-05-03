@@ -32,8 +32,8 @@ class ChiliCard(Widget):
         super(ChiliCard, self).__init__(*args, **kwargs)
 
         self.value = kwargs['value']
-        self.bind(pos=self.update_pos)
-        self.bind(size=self.update_size)
+        self.bind(pos = self.update_pos)
+        self.bind(size = self.update_size)
 
     def flip(self, by_user=True):
         ''' Flip the card '''
@@ -74,21 +74,21 @@ class ChiliImageCard(ChiliCard):
     back_color=ListProperty(OBJECT_COLOR)
     def __init__(self, *args, **kwargs):
         super(ChiliImageCard, self).__init__(*args, **kwargs)
-        self.front_widget = Image(source=kwargs['img'])
+        self.front_widget = Image(source = kwargs['img'])
         
 
 class ChiliWordCard(ChiliCard):
     back_color=ListProperty(WORD_COLOR)
     def __init__(self, *args, **kwargs):
         super(ChiliWordCard, self).__init__(*args, **kwargs)
-        self.front_widget = Label(text=kwargs['text'], pos=self.pos, size=self.size)
+        self.front_widget = Label(text = kwargs['text'], pos = self.pos, size = self.size)
 
 class ChiliSoundCard(ChiliCard):
     back_color=ListProperty(SOUND_COLOR)
     card_sound=''
     def __init__(self, *args, **kwargs):
         super(ChiliSoundCard, self).__init__(*args, **kwargs)
-        self.front_widget = Image(source='img/sound.png')
+        self.front_widget = Image(source = img/sound.png')
         self.card_sound = SoundLoader.load(kwargs['sound'])
 
     def flip(self, by_user=True):
@@ -103,7 +103,7 @@ class ChiliSoundCard(ChiliCard):
             print "SOOOUND!!!!"
 
     def on_touch_up(self, touch):   
-        if (self.status==FLIPPED or self.status==GUESSED) \
+        if (self.status == FLIPPED or self.status == GUESSED) \
         and self.collide_point(touch.x, touch.y):           # Play only if the card is
                                                             # already flipped
             self.play_sound()

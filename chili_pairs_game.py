@@ -1,20 +1,21 @@
 import csv, os, random
 from kivy.uix.boxlayout import BoxLayout
-from kivy.properties import ObjectProperty, NumericProperty
+from kivy.properties import ObjectProperty, NumericProperty, StringProperty
 from chili_card import ChiliImageCard, ChiliWordCard, ChiliSoundCard
 
 
 class ChiliPairsGame(BoxLayout):
 
     chiligrid = ObjectProperty(None)
-    setlists= list()
-    
+    setlists = list()
+    set_loaded = StringProperty('')
+
     def __init__(self, *args, **kwargs):
         super(ChiliPairsGame, self).__init__(*args, **kwargs)
-        sets=os.listdir('card_sets') 
+        sets = os.listdir('card_sets') 
         for i in sets:
-            path=''.join(['card_sets/', i])
-            set_name=i.split('.')[0]
+            path =''.join(['card_sets/', i])
+            set_name = i.split('.')[0]
             self.setlists.append([set_name, path])
         print self.setlists
 
@@ -24,7 +25,8 @@ class ChiliPairsGame(BoxLayout):
         # TODO reset values
         self.chiligrid.clear_widgets()
         #pick a random set of cards
-        set_id=random.randint(0,len(self.setlists)-1)
+        set_id = random.randint(0,len(self.setlists)-1)
+        self.set_loaded = self.setlists[set_id][0].capitalize()
         self.load_cards(set_id)
         self.play()
 
@@ -32,13 +34,13 @@ class ChiliPairsGame(BoxLayout):
         ''' Reads and loads the cards for the cvs file '''
         cards= open(self.setlists[set_id][1])
         read_cards = list(csv.reader(cards))        
-        cards_to_add=list()
+        cards_to_add = list()
 
         for row in read_cards:
             cword, cimg, csound = row
-            cards_to_add.append(ChiliWordCard(text=cword, value=cword))
-            cards_to_add.append(ChiliImageCard(img=cimg, value=cword))
-            cards_to_add.append(ChiliSoundCard(sound=csound, value=cword))
+            cards_to_add.append(ChiliWordCard(text = cword, value = cword))
+            cards_to_add.append(ChiliImageCard(img = cimg, value = cword))
+            cards_to_add.append(ChiliSoundCard(sound = csound, value = cword))
         
         #shuffle the cards in order to randomize their location
         random.shuffle(cards_to_add)
