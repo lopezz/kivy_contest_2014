@@ -88,7 +88,7 @@ class ChiliSoundCard(ChiliCard):
     card_sound=''
     def __init__(self, *args, **kwargs):
         super(ChiliSoundCard, self).__init__(*args, **kwargs)
-        self.front_widget = Image(source = img/sound.png')
+        self.front_widget = Image(source = 'img/sound.png')
         self.card_sound = SoundLoader.load(kwargs['sound'])
 
     def flip(self, by_user=True):
