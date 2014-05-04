@@ -2,6 +2,8 @@ import csv, os, random
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty, NumericProperty, StringProperty
 from chili_card import ChiliImageCard, ChiliWordCard, ChiliSoundCard
+from kivy.clock import Clock
+import time
 
 
 class ChiliPairsGame(BoxLayout):
@@ -9,6 +11,9 @@ class ChiliPairsGame(BoxLayout):
     chiligrid = ObjectProperty(None)
     setlists = list()
     set_loaded = StringProperty('')
+    elapsed_time_str = StringProperty('')
+    elapsed_time = 0.0
+    cards_left = NumericProperty(0) # Cards left in grid
 
     def __init__(self, *args, **kwargs):
         super(ChiliPairsGame, self).__init__(*args, **kwargs)
@@ -28,6 +33,7 @@ class ChiliPairsGame(BoxLayout):
         set_id = random.randint(0,len(self.setlists)-1)
         self.set_loaded = self.setlists[set_id][0].capitalize()
         self.load_cards(set_id)
+        self.elapsed_time = 0
         self.play()
 
     def load_cards(self, set_id):
@@ -43,6 +49,7 @@ class ChiliPairsGame(BoxLayout):
             cards_to_add.append(ChiliSoundCard(sound = csound, value = cword))
         
         #shuffle the cards in order to randomize their location
+        self.cards_left = len(cards_to_add)
         random.shuffle(cards_to_add)
         
         for card in cards_to_add:
@@ -51,15 +58,18 @@ class ChiliPairsGame(BoxLayout):
 
     def play(self):
         ''' Play/start game '''
-        pass
-
+        Clock.schedule_interval(self.time_counter, 1.0)
+    
     def pause(self):
         ''' Pauses game '''
+        Clock.unschedule(self.time_counter)
         pass
 
     def stop(self):
         ''' Stops game '''
-        pass
+        print "Stop Game"
+        Clock.unschedule(self.time_counter)
+        # TODO other stuff.
 
     def show_menu(self):
         ''' Shows main menu '''
@@ -69,6 +79,14 @@ class ChiliPairsGame(BoxLayout):
         ''' Hides main menu '''
         pass
 
+    def time_counter(self, t):
+        self.elapsed_time += 1
+        self.elapsed_time_str = time.strftime('%M:%S', time.gmtime(self.elapsed_time))
+        
+
     def cards_matched(self, value):
         print "cards matched", value
-        pass
+        if value:
+            self.cards_left -= 3
+            if self.cards_left == 0:
+                self.stop() # End game
