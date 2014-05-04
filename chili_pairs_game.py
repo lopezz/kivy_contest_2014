@@ -1,9 +1,10 @@
 import csv, os, random
 from kivy.uix.boxlayout import BoxLayout
-from kivy.properties import ObjectProperty, NumericProperty, StringProperty
+from kivy.properties import ObjectProperty, NumericProperty, StringProperty, ListProperty
 from chili_card import ChiliImageCard, ChiliWordCard, ChiliSoundCard
 from kivy.clock import Clock
 import time
+from chili_helpers import Helper, ShowCardsHelper
 
 
 class ChiliPairsGame(BoxLayout):
@@ -14,6 +15,7 @@ class ChiliPairsGame(BoxLayout):
     elapsed_time_str = StringProperty('')
     elapsed_time = 0.0
     cards_left = NumericProperty(0) # Cards left in grid
+    card_list = ListProperty([])
 
     def __init__(self, *args, **kwargs):
         super(ChiliPairsGame, self).__init__(*args, **kwargs)
@@ -23,7 +25,9 @@ class ChiliPairsGame(BoxLayout):
             set_name = i.split('.')[0]
             self.setlists.append([set_name, path])
         print self.setlists
-
+        # Helpers
+        Helper.chiligame = self
+        self.showcards_helper = ShowCardsHelper()
 
     def new_game(self):
         ''' Sets a new game and starts it '''
@@ -41,12 +45,14 @@ class ChiliPairsGame(BoxLayout):
         cards= open(self.setlists[set_id][1])
         read_cards = list(csv.reader(cards))        
         cards_to_add = list()
+        self.card_list = []
 
         for row in read_cards:
             cword, cimg, csound = row
             cards_to_add.append(ChiliWordCard(text = cword, value = cword))
             cards_to_add.append(ChiliImageCard(img = cimg, value = cword))
             cards_to_add.append(ChiliSoundCard(sound = csound, value = cword))
+            self.card_list.extend(cards_to_add[-3:])
         
         #shuffle the cards in order to randomize their location
         self.cards_left = len(cards_to_add)
