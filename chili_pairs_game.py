@@ -16,18 +16,25 @@ class ChiliPairsGame(BoxLayout):
     elapsed_time = 0.0
     cards_left = NumericProperty(0) # Cards left in grid
     card_list = ListProperty([])
+    showcards_helper = ObjectProperty(None)
+    show_remain = NumericProperty(0)    # Remaining showcards helps
+    
 
     def __init__(self, *args, **kwargs):
         super(ChiliPairsGame, self).__init__(*args, **kwargs)
+        ''' Finds all the sets available in the card sets
+            dir and load them in the setlists variable '''
         sets = os.listdir('card_sets') 
         for i in sets:
             path =''.join(['card_sets/', i])
             set_name = i.split('.')[0]
             self.setlists.append([set_name, path])
         print self.setlists
+
         # Helpers
         Helper.chiligame = self
         self.showcards_helper = ShowCardsHelper()
+        self.show_remain = self.showcards_helper.remaining
 
     def new_game(self):
         ''' Sets a new game and starts it '''
@@ -81,7 +88,7 @@ class ChiliPairsGame(BoxLayout):
         ''' Shows main menu '''
         pass
 
-    def hides_menu(self):
+    def hide_menu(self):
         ''' Hides main menu '''
         pass
 

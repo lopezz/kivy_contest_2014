@@ -15,14 +15,31 @@
             font_size: 20
             text: 'Time: ' + root.elapsed_time_str
 
-    ChiliGrid:
-        id: _chiligrid
-        chiligame: root
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint: 1, 0.9
+        spacing: 10
 
+        ChiliGrid:
+            id: _chiligrid
+            chiligame: root
+
+        BoxLayout
+            orientation: 'vertical'
+            size_hint: 0.1, 1
+            spacing: 20
+
+            Button:
+                size: 20, 50
+                text: ' Mostrar \n Cartas (' + str(root.show_remain) + ')'
+
+            Button:
+                size: 20, 50
+                text: ' Adivinar \n Objeto'
 <ChiliGrid>:
-    spacing: 5
+    spacing: 10
     # size: 800, 600
-    size_hint: 1, 0.9 
+    size_hint: 0.9, 1 
     gridsize: 4, 6
 
 <ChiliCard>:

@@ -3,6 +3,7 @@ Helpers user can  use to solve the grid.
 '''
 from constants import UNFLIPPED
 from kivy.clock import Clock
+from kivy.properties import ObjectProperty
 import random
 
 class Helper(object):
