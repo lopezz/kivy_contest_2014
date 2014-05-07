@@ -16,8 +16,7 @@ class ChiliPairsGame(BoxLayout):
     elapsed_time = 0.0
     cards_left = NumericProperty(0) # Cards left in grid
     card_list = ListProperty([])
-    showcards_helper = ObjectProperty(None)
-    show_remain = NumericProperty(0)    # Remaining showcards helps
+    showcards_helper = ObjectProperty(ShowCardsHelper())
     
 
     def __init__(self, *args, **kwargs):
@@ -33,8 +32,6 @@ class ChiliPairsGame(BoxLayout):
 
         # Helpers
         Helper.chiligame = self
-        self.showcards_helper = ShowCardsHelper()
-        self.show_remain = self.showcards_helper.remaining
 
     def new_game(self):
         ''' Sets a new game and starts it '''
@@ -96,6 +93,11 @@ class ChiliPairsGame(BoxLayout):
         self.elapsed_time += 1
         self.elapsed_time_str = time.strftime('%M:%S', time.gmtime(self.elapsed_time))
         
+    def use_help(self, helper_name):
+        ''' If the help can be used, it is activated '''
+        if self.showcards_helper.helper_name == helper_name and self.showcards_helper.can_use():
+            self.showcards_helper.activate()
+
 
     def cards_matched(self, value):
         print "cards matched", value

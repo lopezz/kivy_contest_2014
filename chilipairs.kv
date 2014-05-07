@@ -30,12 +30,11 @@
             spacing: 20
 
             Button:
-                size: 20, 50
-                text: ' Mostrar \n Cartas (' + str(root.show_remain) + ')'
+                text: ' Show \n Cards (' + str(root.showcards_helper.remaining) + ')'
+                on_press: root.use_help('show')
 
             Button:
-                size: 20, 50
-                text: ' Adivinar \n Objeto'
+                text: ' Guess \n Stuff'
 <ChiliGrid>:
     spacing: 10
     # size: 800, 600

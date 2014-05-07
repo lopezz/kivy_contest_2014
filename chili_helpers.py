@@ -3,11 +3,14 @@ Helpers user can  use to solve the grid.
 '''
 from constants import UNFLIPPED
 from kivy.clock import Clock
-from kivy.properties import ObjectProperty
+from kivy.properties import ObjectProperty, NumericProperty
+from kivy.event import EventDispatcher
 import random
 
-class Helper(object):
-    remaining = 2
+class Helper(EventDispatcher):
+    remaining = NumericProperty(2)
+    # remaining = NumericProperty(0)
+    # remaining = 2
     chiligame = None
     executing = False
 
@@ -28,6 +31,7 @@ class Helper(object):
 
 class ShowCardsHelper(Helper):
     ''' Show N cards during T seconds '''
+    helper_name = "show"
     N = 6
     T = 8
     cards2show = []
