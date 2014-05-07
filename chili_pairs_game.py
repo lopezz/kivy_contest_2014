@@ -3,6 +3,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty, NumericProperty, StringProperty, ListProperty
 from chili_card import ChiliImageCard, ChiliWordCard, ChiliSoundCard
 from kivy.clock import Clock
+from kivy.core.audio import SoundLoader
 import time
 from chili_helpers import Helper, ShowCardsHelper
 
@@ -32,6 +33,10 @@ class ChiliPairsGame(BoxLayout):
 
         # Helpers
         Helper.chiligame = self
+
+        # Game sound effects
+        self.match_sound = SoundLoader.load('sound/match.ogg')
+        self.win_sound = SoundLoader.load('sound/win.ogg')
 
     def new_game(self):
         ''' Sets a new game and starts it '''
@@ -102,6 +107,8 @@ class ChiliPairsGame(BoxLayout):
     def cards_matched(self, value):
         print "cards matched", value
         if value:
+            self.match_sound.play()
             self.cards_left -= 3
             if self.cards_left == 0:
+                self.win_sound.play()
                 self.stop() # End game

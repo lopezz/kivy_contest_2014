@@ -3,14 +3,12 @@ Helpers user can  use to solve the grid.
 '''
 from constants import UNFLIPPED
 from kivy.clock import Clock
-from kivy.properties import ObjectProperty, NumericProperty
+from kivy.properties import NumericProperty
 from kivy.event import EventDispatcher
 import random
 
 class Helper(EventDispatcher):
     remaining = NumericProperty(2)
-    # remaining = NumericProperty(0)
-    # remaining = 2
     chiligame = None
     executing = False
 
