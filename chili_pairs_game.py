@@ -1,17 +1,16 @@
-import csv, os, random
+import csv, os, random, time
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty, NumericProperty, StringProperty, ListProperty
 from chili_card import ChiliImageCard, ChiliWordCard, ChiliSoundCard
 from kivy.clock import Clock
 from kivy.core.audio import SoundLoader
-import time
 from chili_helpers import Helper, ShowCardsHelper
 
 
 class ChiliPairsGame(BoxLayout):
 
     chiligrid = ObjectProperty(None)
-    setlists = list()
+    sets_list = list()
     set_loaded = StringProperty('')
     elapsed_time_str = StringProperty('')
     elapsed_time = 0.0
@@ -23,13 +22,13 @@ class ChiliPairsGame(BoxLayout):
     def __init__(self, *args, **kwargs):
         super(ChiliPairsGame, self).__init__(*args, **kwargs)
         ''' Finds all the sets available in the card sets
-            dir and load them in the setlists variable '''
+            dir and load them in the sets_list variable '''
         sets = os.listdir('card_sets') 
         for i in sets:
             path =''.join(['card_sets/', i])
             set_name = i.split('.')[0]
-            self.setlists.append([set_name, path])
-        print self.setlists
+            self.sets_list.append([set_name, path])
+        print self.sets_list
 
         # Helpers
         Helper.chiligame = self
@@ -43,16 +42,16 @@ class ChiliPairsGame(BoxLayout):
         # TODO reset values
         self.chiligrid.clear_widgets()
         #pick a random set of cards
-        set_id = random.randint(0,len(self.setlists)-1)
-        self.set_loaded = self.setlists[set_id][0].capitalize()
+        set_id = random.randint(0,len(self.sets_list)-1)
+        self.set_loaded = self.sets_list[set_id][0].capitalize()
         self.load_cards(set_id)
         self.elapsed_time = 0
         self.play()
 
     def load_cards(self, set_id):
         ''' Reads and loads the cards for the cvs file '''
-        cards= open(self.setlists[set_id][1])
-        read_cards = list(csv.reader(cards))        
+        cards= open(self.sets_list[set_id][1])
+        read_cards = random.sample(list(csv.reader(cards)), 8)  # Pick only 8 'trios'
         cards_to_add = list()
         self.card_list = []
 
