@@ -1,11 +1,11 @@
 import csv, os, random, time
 from kivy.uix.boxlayout import BoxLayout
-from kivy.properties import ObjectProperty, NumericProperty, StringProperty, ListProperty
+from kivy.properties import ObjectProperty, NumericProperty, StringProperty, ListProperty, OptionProperty
 from chili_card import ChiliImageCard, ChiliWordCard, ChiliSoundCard
 from kivy.clock import Clock
 from kivy.core.audio import SoundLoader
 from chili_helpers import Helper, ShowCardsHelper
-
+from constants import STOPPED, RUNNING, PAUSED
 
 class ChiliPairsGame(BoxLayout):
 
@@ -17,8 +17,8 @@ class ChiliPairsGame(BoxLayout):
     cards_left = NumericProperty(0) # Cards left in grid
     card_list = ListProperty([])
     showcards_helper = ObjectProperty(ShowCardsHelper())
+    game_status = OptionProperty(STOPPED, options=[STOPPED, RUNNING, PAUSED])
     
-
     def __init__(self, *args, **kwargs):
         super(ChiliPairsGame, self).__init__(*args, **kwargs)
         ''' Finds all the sets available in the card sets
@@ -57,7 +57,7 @@ class ChiliPairsGame(BoxLayout):
 
         for row in read_cards:
             cword, cimg, csound = row
-            cards_to_add.append(ChiliWordCard(text = cword, value = cword))
+            cards_to_add.append(CgishiliWordCard(text = cword, value = cword))
             cards_to_add.append(ChiliImageCard(img = cimg, value = cword))
             cards_to_add.append(ChiliSoundCard(sound = csound, value = cword))
             self.card_list.extend(cards_to_add[-3:])
@@ -72,16 +72,21 @@ class ChiliPairsGame(BoxLayout):
 
     def play(self):
         ''' Play/start game '''
+        self.game_status = RUNNING
         Clock.schedule_interval(self.time_counter, 1.0)
     
     def pause(self):
-        ''' Pauses game '''
-        Clock.unschedule(self.time_counter)
-        pass
-
+        ''' Pauses/unpauses game '''
+        if self.game_status == RUNNING:
+            Clock.unschedule(self.time_counter)
+            self.game_status = PAUSED
+        else:
+            self.play()
+            
     def stop(self):
         ''' Stops game '''
         print "Stop Game"
+        self.game_status = STOPPED
         Clock.unschedule(self.time_counter)
         # TODO other stuff.
 

@@ -94,7 +94,8 @@ class ChiliSoundCard(ChiliCard):
     def flip(self, by_user=True):
         ''' Flip the card '''
         super(ChiliSoundCard, self).flip(by_user)
-        self.play_sound()     
+        if by_user:
+            self.play_sound()     
     
     def play_sound(self):
         if self.card_sound.state == 'stop':  # Play only if no sound is being
