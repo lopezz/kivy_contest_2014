@@ -57,7 +57,7 @@ class ChiliPairsGame(BoxLayout):
 
         for row in read_cards:
             cword, cimg, csound = row
-            cards_to_add.append(CgishiliWordCard(text = cword, value = cword))
+            cards_to_add.append(ChiliWordCard(text = cword, value = cword))
             cards_to_add.append(ChiliImageCard(img = cimg, value = cword))
             cards_to_add.append(ChiliSoundCard(sound = csound, value = cword))
             self.card_list.extend(cards_to_add[-3:])
@@ -80,9 +80,13 @@ class ChiliPairsGame(BoxLayout):
         if self.game_status == RUNNING:
             Clock.unschedule(self.time_counter)
             self.game_status = PAUSED
-        else:
+            self.chiligrid.can_flip_cards = False
+        elif self.game_status == PAUSED:
+            self.chiligrid.can_flip_cards = True
             self.play()
-            
+        else:
+            pass
+
     def stop(self):
         ''' Stops game '''
         print "Stop Game"

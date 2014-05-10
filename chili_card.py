@@ -94,6 +94,10 @@ class ChiliSoundCard(ChiliCard):
     def flip(self, by_user=True):
         ''' Flip the card '''
         super(ChiliSoundCard, self).flip(by_user)
+        
+        if not self.chiligrid.can_flip_cards:
+            return
+        
         if by_user:
             self.play_sound()     
     
