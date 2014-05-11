@@ -4,7 +4,7 @@ from kivy.properties import ObjectProperty, NumericProperty, StringProperty, Lis
 from chili_card import ChiliImageCard, ChiliWordCard, ChiliSoundCard
 from kivy.clock import Clock
 from kivy.core.audio import SoundLoader
-from chili_helpers import Helper, ShowCardsHelper
+from chili_helpers import Helper, ShowCardsHelper, GuessObjectHelper
 from constants import STOPPED, RUNNING, PAUSED
 
 class ChiliPairsGame(BoxLayout):
@@ -17,6 +17,7 @@ class ChiliPairsGame(BoxLayout):
     cards_left = NumericProperty(0) # Cards left in grid
     card_list = ListProperty([])
     showcards_helper = ObjectProperty(ShowCardsHelper())
+    guessobj_helper = ObjectProperty(GuessObjectHelper())
     game_status = OptionProperty(STOPPED, options=[STOPPED, RUNNING, PAUSED])
     
     def __init__(self, *args, **kwargs):
@@ -32,6 +33,7 @@ class ChiliPairsGame(BoxLayout):
 
         # Helpers
         Helper.chiligame = self
+        self.helpers = {'show': self.showcards_helper, 'guess': self.guessobj_helper}
 
         # Game sound effects
         self.match_sound = SoundLoader.load('sound/match.ogg')
@@ -108,8 +110,9 @@ class ChiliPairsGame(BoxLayout):
         
     def use_help(self, helper_name):
         ''' If the help can be used, it is activated '''
-        if self.showcards_helper.helper_name == helper_name and self.showcards_helper.can_use():
-            self.showcards_helper.activate()
+        helper = self.helpers[helper_name]
+        if helper.can_use():
+           helper.activate()
 
 
     def cards_matched(self, value):

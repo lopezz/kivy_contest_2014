@@ -34,7 +34,9 @@
                 on_press: root.use_help('show')
 
             Button:
-                text: ' Guess \n Stuff'
+                text: ' Guess \n Object (' + str(root.guessobj_helper.remaining) + ')'
+
+                on_press: root.use_help('guess')
 
             Button:
                 text: ' Pause \n Game'
