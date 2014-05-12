@@ -80,16 +80,20 @@ class ChiliPairsGame(BoxLayout):
         Clock.schedule_interval(self.time_counter, 1.0)
     
     def pause(self):
-        ''' Pauses/unpauses game '''
-        if self.game_status == RUNNING:
-            Clock.unschedule(self.time_counter)
-            self.game_status = PAUSED
-            self.chiligrid.can_flip_cards = False
-        elif self.game_status == PAUSED:
-            self.chiligrid.can_flip_cards = True
-            self.play()
+        ''' Pauses/resumes game '''
+        if self.showcards_helper.executing or self.guessobj_helper.executing:
+            # TODO: show this into alertish form
+            print "You cannot pause the game if there is an active help"
         else:
-            pass
+            if self.game_status == RUNNING:
+                Clock.unschedule(self.time_counter)
+                self.game_status = PAUSED
+                self.chiligrid.can_flip_cards = False
+            elif self.game_status == PAUSED:
+                self.chiligrid.can_flip_cards = True
+                self.play()
+            else:
+                pass
 
     def stop(self):
         ''' Stops game '''
@@ -103,7 +107,7 @@ class ChiliPairsGame(BoxLayout):
             Different cards may be chosen since they are picked randomly '''
         if self.showcards_helper.executing or self.guessobj_helper.executing:
             # TODO Show alert!
-            print "wrooooong"
+            print "You cannot restart the game while using a help"
         else:
             self.chiligrid.clear_widgets()
             self.elapsed_time = 0.0
