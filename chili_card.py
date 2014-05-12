@@ -6,6 +6,7 @@ There are three types:
 '''
 
 from kivy.uix.widget import Widget
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.image import Image
 from kivy.uix.button import ButtonBehavior
@@ -14,7 +15,7 @@ from kivy.properties import BooleanProperty, ListProperty, StringProperty, Objec
 from constants import NONE_COLOR, OBJECT_COLOR, WORD_COLOR, SOUND_COLOR, UNFLIPPED, FLIPPED, GUESSED, BGCOLOR_NORMAL, BGCOLOR_GUESSED
 
 
-class ChiliCard(Widget):
+class ChiliCard(BoxLayout):
     # Status of the card. UNFLIPPED, FLIPPED, OR GUESSED
     status = OptionProperty(UNFLIPPED, options=[UNFLIPPED, FLIPPED, GUESSED])
     flip_by_user = BooleanProperty(False)
@@ -72,24 +73,38 @@ class ChiliCard(Widget):
 
 class ChiliImageCard(ChiliCard):
     back_color=ListProperty(OBJECT_COLOR)
+
     def __init__(self, *args, **kwargs):
         super(ChiliImageCard, self).__init__(*args, **kwargs)
         self.front_widget = Image(source = kwargs['img'])
         
+    def guess(self):
+        super(ChiliImageCard, self).guess()
+        #Transform card (add text Label)
+        self.add_widget(Label(text=self.value, size_hint=(0.5, 0.5)))
 
 class ChiliWordCard(ChiliCard):
     back_color=ListProperty(WORD_COLOR)
+
     def __init__(self, *args, **kwargs):
         super(ChiliWordCard, self).__init__(*args, **kwargs)
         self.front_widget = Label(text = kwargs['text'], pos = self.pos, size = self.size)
 
+    def guess(self):
+        super(ChiliWordCard, self).guess()
+        self.clear_widgets() # Remove front widget
+        self.bgcolor = BGCOLOR_NORMAL  
+
 class ChiliSoundCard(ChiliCard):
-    back_color=ListProperty(SOUND_COLOR)
-    card_sound=''
+    back_color = ListProperty(SOUND_COLOR)
+    card_sound = ''
+    image_card = None
+
     def __init__(self, *args, **kwargs):
         super(ChiliSoundCard, self).__init__(*args, **kwargs)
         self.front_widget = Image(source = 'img/sound.png')
         self.card_sound = SoundLoader.load(kwargs['sound'])
+        self.image_card = kwargs['image_card']  # Matching Image card
 
     def flip(self, by_user=True):
         ''' Flip the card '''
@@ -108,9 +123,18 @@ class ChiliSoundCard(ChiliCard):
             print "SOOOUND!!!!"
 
     def on_touch_up(self, touch):   
-        if (self.status == FLIPPED or self.status == GUESSED) \
-        and self.collide_point(touch.x, touch.y):           # Play only if the card is
-                                                            # already flipped
+        if (self.status == FLIPPED and self.collide_point(touch.x, touch.y))\
+                or (self.status == GUESSED and\
+                    self.image_card.collide_point(touch.x, touch.y)):
+        # Play only if the card is already flipped or play if the card
+        # is guessed but only when the matching Image card is pressed
             self.play_sound()
         else:
             pass
+
+    def guess(self):
+        super(ChiliSoundCard, self).guess()
+        self.clear_widgets()
+        self.bgcolor = BGCOLOR_NORMAL
+
+

@@ -63,7 +63,7 @@ class ChiliPairsGame(BoxLayout):
             cword, cimg, csound = row
             cards_to_add.append(ChiliWordCard(text = cword, value = cword))
             cards_to_add.append(ChiliImageCard(img = cimg, value = cword))
-            cards_to_add.append(ChiliSoundCard(sound = csound, value = cword))
+            cards_to_add.append(ChiliSoundCard(sound = csound, value = cword, image_card=cards_to_add[-1]))
             self.card_list.extend(cards_to_add[-3:])
         
         #shuffle the cards in order to randomize their location
