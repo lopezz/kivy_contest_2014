@@ -81,7 +81,7 @@ class ChiliImageCard(ChiliCard):
     def guess(self):
         super(ChiliImageCard, self).guess()
         #Transform card (add text Label)
-        self.add_widget(Label(text=self.value, size_hint=(0.5, 0.5)))
+        self.add_widget(Label(text=self.value, size_hint=(1, 0.2)))
 
 class ChiliWordCard(ChiliCard):
     back_color=ListProperty(WORD_COLOR)
