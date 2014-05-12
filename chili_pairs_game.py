@@ -12,6 +12,7 @@ class ChiliPairsGame(BoxLayout):
     chiligrid = ObjectProperty(None)
     sets_list = list()
     set_loaded = StringProperty('')
+    current_set_id = -1
     elapsed_time_str = StringProperty('')
     elapsed_time = 0.0
     cards_left = NumericProperty(0) # Cards left in grid
@@ -45,6 +46,7 @@ class ChiliPairsGame(BoxLayout):
         self.chiligrid.clear_widgets()
         #pick a random set of cards
         set_id = random.randint(0,len(self.sets_list)-1)
+        self.current_set_id = set_id
         self.set_loaded = self.sets_list[set_id][0].capitalize()
         self.load_cards(set_id)
         self.elapsed_time = 0
@@ -95,6 +97,19 @@ class ChiliPairsGame(BoxLayout):
         self.game_status = STOPPED
         Clock.unschedule(self.time_counter)
         # TODO other stuff.
+
+    def restart_game(self):
+        ''' Restart the game  with the current set of cards.
+            Different cards may be chosen since they are picked randomly '''
+        if self.showcards_helper.executing or self.guessobj_helper.executing:
+            # TODO Show alert!
+            print "wrooooong"
+        else:
+            self.chiligrid.clear_widgets()
+            self.elapsed_time = 0.0
+            self.showcards_helper.remaining = 2
+            self.guessobj_helper.remaining = 5
+            self.load_cards(self.current_set_id)
 
     def show_menu(self):
         ''' Shows main menu '''
