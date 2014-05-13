@@ -78,3 +78,62 @@
                 pos: self.pos
                 size: self.size
                 source: root.back_img
+
+
+<ChiliMenu@BoxLayout>:
+    size: root.size
+    pos: root.pos
+    orientation: "vertical"
+    set_options: _set_options
+    chiligame: None
+    continue_btn: _continue_btn
+
+    Accordion:
+        orientation: "vertical"
+        AccordionItem:
+            title: "Play"
+            collapse: True
+            BoxLayout:
+                id: _set_options
+                chiligame: root.chiligame
+                orientation: "vertical"
+        AccordionItem:
+            title: "Settings"
+            title_template: "AccordionItemTitle"
+    Button:
+        id: _continue_btn
+        text: "Continue"
+        disabled: True
+        size_hint: 1, 0.1
+        on_press: root.chiligame.hide_menu()
+
+<SetButton@Button>:
+    background_color: 0, 1, 0, 1
+    set_id: -1
+    on_press: 
+        self.parent.chiligame.new_game(self.set_id)
+        self.parent.chiligame.hide_menu()
+
+[AccordionItemTitle@Button]:
+    text: ctx.title
+    canvas.before:
+        Color:
+            rgb: 1, 1, 1
+        BorderImage:
+            source:
+                ctx.item.background_normal \
+                if ctx.item.collapse \
+                else ctx.item.background_selected
+            pos: self.pos
+            size: self.size
+        PushMatrix
+        Translate:
+            xy: self.center_x, self.center_y
+        Rotate:
+            angle: 90 if ctx.item.orientation == 'horizontal' else 0
+            axis: 0, 0, 1
+        Translate:
+            xy: -self.center_x, -self.center_y
+    canvas.after:
+        PopMatrix
+    on_press: print "press"

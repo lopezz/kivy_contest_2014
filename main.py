@@ -15,7 +15,8 @@ mixer.init()
 class ChiliPairsApp(App):
     def build(self):
         chili_game =  ChiliPairsGame()
-        chili_game.new_game()
+        #chili_game.new_game()
+        chili_game.show_menu()
         return chili_game
 
 if __name__ == '__main__':

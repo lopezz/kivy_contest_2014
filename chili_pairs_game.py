@@ -6,6 +6,10 @@ from kivy.clock import Clock
 from kivy.core.audio import SoundLoader
 from chili_helpers import Helper, ShowCardsHelper, GuessObjectHelper
 from constants import STOPPED, RUNNING, PAUSED
+from kivy.uix.popup import Popup
+from kivy.uix.modalview import ModalView
+from kivy.uix.label import Label
+from kivy.factory import Factory
 
 class ChiliPairsGame(BoxLayout):
 
@@ -25,12 +29,24 @@ class ChiliPairsGame(BoxLayout):
         super(ChiliPairsGame, self).__init__(*args, **kwargs)
         ''' Finds all the sets available in the card sets
             dir and load them in the sets_list variable '''
+
+        # Create Menu
+        cmenu = Factory.ChiliMenu(chiligame=self)
+        cmenu.chiligame = self
+        self.menu = Popup(title='CHILI TRIO', content=cmenu, size_hint=(None, None), size=(400, 400), auto_dismiss=False)
+        self.menu.content.set_options.add_widget(Factory.SetButton(text="Random")) # Random button
+        # Load sets
         sets = os.listdir('card_sets') 
-        for i in sets:
+        for n, i in enumerate(sets):
             path =''.join(['card_sets/', i])
             set_name = i.split('.')[0]
             self.sets_list.append([set_name, path])
+            #Add setbutton to menu
+            set_menubtn = Factory.SetButton(text=set_name)
+            set_menubtn.set_id = n
+            self.menu.content.set_options.add_widget(set_menubtn)
         print self.sets_list
+        
 
         # Helpers
         Helper.chiligame = self
@@ -40,12 +56,13 @@ class ChiliPairsGame(BoxLayout):
         self.match_sound = SoundLoader.load('sound/match.ogg')
         self.win_sound = SoundLoader.load('sound/win.ogg')
 
-    def new_game(self):
+    def new_game(self, set_id=-1):
         ''' Sets a new game and starts it '''
         # TODO reset values
         self.chiligrid.clear_widgets()
         #pick a random set of cards
-        set_id = random.randint(0,len(self.sets_list)-1)
+        if set_id == -1: # -1 is random
+            set_id = random.randint(0,len(self.sets_list)-1)
         self.current_set_id = set_id
         self.set_loaded = self.sets_list[set_id][0].capitalize()
         self.load_cards(set_id)
@@ -54,6 +71,7 @@ class ChiliPairsGame(BoxLayout):
 
     def load_cards(self, set_id):
         ''' Reads and loads the cards for the cvs file '''
+        print "loading ", self.sets_list[set_id]
         cards= open(self.sets_list[set_id][1])
         read_cards = random.sample(list(csv.reader(cards)), 8)  # Pick only 8 'trios'
         cards_to_add = list()
@@ -89,6 +107,8 @@ class ChiliPairsGame(BoxLayout):
                 Clock.unschedule(self.time_counter)
                 self.game_status = PAUSED
                 self.chiligrid.can_flip_cards = False
+                self.menu.content.continue_btn.disabled = False
+                self.show_menu()
             elif self.game_status == PAUSED:
                 self.chiligrid.can_flip_cards = True
                 self.play()
@@ -117,11 +137,14 @@ class ChiliPairsGame(BoxLayout):
 
     def show_menu(self):
         ''' Shows main menu '''
-        pass
+        Clock.schedule_once(self._open_menu, 0.1)
+
+    def _open_menu(self, t):
+        self.menu.open()
 
     def hide_menu(self):
         ''' Hides main menu '''
-        pass
+        self.menu.dismiss()
 
     def time_counter(self, t):
         self.elapsed_time += 1
