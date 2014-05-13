@@ -32,6 +32,7 @@ class ChiliPairsGame(BoxLayout):
         cmenu.chiligame = self
         self.menu = Popup(title='CHILI TRIO', content=cmenu, size_hint=(None, None), size=(400, 400), auto_dismiss=False)
         self.menu.content.set_options.add_widget(Factory.SetButton(text="Random")) # Random button
+        
         # Load sets
         sets = os.listdir('card_sets') 
         for n, i in enumerate(sets):
@@ -50,6 +51,7 @@ class ChiliPairsGame(BoxLayout):
         # Game sound effects
         self.match_sound = SoundLoader.load('sound/match.ogg')
         self.win_sound = SoundLoader.load('sound/win.ogg')
+        self.forbidden_sound = SoundLoader.load('sound/forbidden.ogg')
 
     def new_game(self, set_id=-1):
         ''' Sets a new game and starts it '''
@@ -98,6 +100,7 @@ class ChiliPairsGame(BoxLayout):
         ''' Pauses/resumes game '''
         if self.showcards_helper.executing or self.guessobj_helper.executing:
             # TODO: show this into alertish form
+            self.forbidden_sound.play()
             print "You cannot pause the game if there is an active help"
         else:
             if self.game_status == RUNNING:
@@ -154,8 +157,10 @@ class ChiliPairsGame(BoxLayout):
         ''' If the help can be used, it is activated '''
         helper = self.helpers[helper_name]
         if helper.can_use():
-           helper.activate()
-
+            helper.activate()
+        else:
+            self.forbidden_sound.play()
+            print "You cannot use that help now"
 
     def cards_matched(self, value):
         print "cards matched", value
