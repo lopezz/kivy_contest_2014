@@ -40,16 +40,10 @@
 
             Button:
                 text: ' Pause \n Game'
-                on_press: root.pause()
-
-
-            Button:
-                text: ' Restart \n Game'
-                on_press: root.restart_game()
+                on_press: root.pause_game()
 
 <ChiliGrid>:
     spacing: 10
-    # size: 800, 600
     size_hint: 0.9, 1 
     gridsize: 4, 6
 
@@ -88,11 +82,12 @@
     set_options: _set_options
     chiligame: None
     continue_btn: _continue_btn
+    restart_btn: _restart_btn
 
     Accordion:
         orientation: "vertical"
         AccordionItem:
-            title: "Play"
+            title: "New Game"
             collapse: True
             BoxLayout:
                 id: _set_options
@@ -106,7 +101,14 @@
         text: "Continue"
         disabled: True
         size_hint: 1, 0.1
-        on_press: root.chiligame.hide_menu()
+        on_press: root.chiligame.pause_game()
+
+    Button:
+        id: _restart_btn
+        text: "Restart"
+        disabled: True
+        size_hint: 1,0.1
+        on_press: root.chiligame.restart_game()
 
 <SetButton@Button>:
     background_color: 0, 1, 0, 1

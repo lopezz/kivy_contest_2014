@@ -27,9 +27,6 @@ class ChiliPairsGame(BoxLayout):
     
     def __init__(self, *args, **kwargs):
         super(ChiliPairsGame, self).__init__(*args, **kwargs)
-        ''' Finds all the sets available in the card sets
-            dir and load them in the sets_list variable '''
-
         # Create Menu
         cmenu = Factory.ChiliMenu(chiligame=self)
         cmenu.chiligame = self
@@ -44,9 +41,7 @@ class ChiliPairsGame(BoxLayout):
             #Add setbutton to menu
             set_menubtn = Factory.SetButton(text=set_name)
             set_menubtn.set_id = n
-            self.menu.content.set_options.add_widget(set_menubtn)
-        print self.sets_list
-        
+            self.menu.content.set_options.add_widget(set_menubtn)        
 
         # Helpers
         Helper.chiligame = self
@@ -60,13 +55,14 @@ class ChiliPairsGame(BoxLayout):
         ''' Sets a new game and starts it '''
         # TODO reset values
         self.chiligrid.clear_widgets()
+        self.chiligrid.can_flip_cards = True
         #pick a random set of cards
         if set_id == -1: # -1 is random
             set_id = random.randint(0,len(self.sets_list)-1)
         self.current_set_id = set_id
         self.set_loaded = self.sets_list[set_id][0].capitalize()
         self.load_cards(set_id)
-        self.elapsed_time = 0
+        self.elapsed_time = 0.0
         self.play()
 
     def load_cards(self, set_id):
@@ -96,8 +92,9 @@ class ChiliPairsGame(BoxLayout):
         ''' Play/start game '''
         self.game_status = RUNNING
         Clock.schedule_interval(self.time_counter, 1.0)
+        print 'game start!'
     
-    def pause(self):
+    def pause_game(self):
         ''' Pauses/resumes game '''
         if self.showcards_helper.executing or self.guessobj_helper.executing:
             # TODO: show this into alertish form
@@ -108,9 +105,11 @@ class ChiliPairsGame(BoxLayout):
                 self.game_status = PAUSED
                 self.chiligrid.can_flip_cards = False
                 self.menu.content.continue_btn.disabled = False
+                self.menu.content.restart_btn.disabled = False
                 self.show_menu()
             elif self.game_status == PAUSED:
                 self.chiligrid.can_flip_cards = True
+                self.hide_menu()
                 self.play()
             else:
                 pass
@@ -130,6 +129,7 @@ class ChiliPairsGame(BoxLayout):
             print "You cannot restart the game while using a help"
         else:
             self.chiligrid.clear_widgets()
+            self.hide_menu()
             self.elapsed_time = 0.0
             self.showcards_helper.remaining = 2
             self.guessobj_helper.remaining = 5
