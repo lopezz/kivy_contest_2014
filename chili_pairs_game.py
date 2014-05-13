@@ -24,6 +24,7 @@ class ChiliPairsGame(BoxLayout):
     showcards_helper = ObjectProperty(ShowCardsHelper())
     guessobj_helper = ObjectProperty(GuessObjectHelper())
     game_status = OptionProperty(STOPPED, options=[STOPPED, RUNNING, PAUSED])
+    alert_msg = StringProperty('')
     
     def __init__(self, *args, **kwargs):
         super(ChiliPairsGame, self).__init__(*args, **kwargs)
@@ -101,7 +102,7 @@ class ChiliPairsGame(BoxLayout):
         if self.showcards_helper.executing or self.guessobj_helper.executing:
             # TODO: show this into alertish form
             self.forbidden_sound.play()
-            print "You cannot pause the game if there is an active help"
+            self.alert_msg = "You cannot pause the game if there is an active help"
         else:
             if self.game_status == RUNNING:
                 Clock.unschedule(self.time_counter)
@@ -129,7 +130,7 @@ class ChiliPairsGame(BoxLayout):
             Different cards may be chosen since they are picked randomly '''
         if self.showcards_helper.executing or self.guessobj_helper.executing:
             # TODO Show alert!
-            print "You cannot restart the game while using a help"
+            self.alert_msg = "You cannot restart the game while using a help"
         else:
             self.chiligrid.clear_widgets()
             self.hide_menu()
@@ -160,7 +161,7 @@ class ChiliPairsGame(BoxLayout):
             helper.activate()
         else:
             self.forbidden_sound.play()
-            print "You cannot use that help now"
+            self.alert_msg = "You cannot use that help now"
 
     def cards_matched(self, value):
         print "cards matched", value

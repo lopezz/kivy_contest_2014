@@ -7,12 +7,12 @@
         size_hint: 1, 0.1
         spacing: 10
         Label:
-            font_size: 20
+            font_size: 18
             #text: 'Set Actual Nombre... si'
             text: 'Now learning: ' + str(root.set_loaded)
 
         Label:
-            font_size: 20
+            font_size: 18
             text: 'Time: ' + root.elapsed_time_str
 
     BoxLayout:
@@ -41,6 +41,12 @@
             Button:
                 text: ' Pause \n Game'
                 on_press: root.pause_game()
+
+    Label:
+        size_hint: 1, 0.05
+        color: 1, 0, 0, 0.7
+        markup: True
+        text: '[i]'+root.alert_msg+'[/i]'
 
 <ChiliGrid>:
     spacing: 10
