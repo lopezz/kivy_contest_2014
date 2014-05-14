@@ -88,6 +88,9 @@
             Rectangle:
                 pos: self.pos
                 size: self.size
+            Rectangle:
+                pos: self.pos
+                size: self.size
                 source: root.back_img
 
 
@@ -123,7 +126,7 @@
         id: _restart_btn
         text: "Restart"
         disabled: True
-        size_hint: 1,0.1
+        size_hint: 1, 0.1
         on_press: root.chiligame.restart_game()
 
 <SetButton@Button>:
