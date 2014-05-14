@@ -59,6 +59,8 @@ class ChiliPairsGame(BoxLayout):
         # TODO reset values
         self.chiligrid.clear_widgets()
         self.chiligrid.can_flip_cards = True
+        self.chiligrid.num_flipped_cards = 0
+        self.chiligrid.flipped_cards = []
         #pick a random set of cards
         if set_id == -1: # -1 is random
             set_id = random.randint(0,len(self.sets_list)-1)
@@ -133,11 +135,13 @@ class ChiliPairsGame(BoxLayout):
             self.alert_msg = "You cannot restart the game while using a help"
         else:
             self.chiligrid.clear_widgets()
-            self.hide_menu()
-            self.elapsed_time = 0.0
             self.showcards_helper.remaining = 2
             self.guessobj_helper.remaining = 5
             self.load_cards(self.current_set_id)
+            self.elapsed_time = 0.0
+            self.chiligrid.num_flipped_cards = 0
+            self.chiligrid.flipped_cards = []
+            self.pause_game()
 
     def show_menu(self):
         ''' Shows main menu '''
