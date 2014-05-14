@@ -14,7 +14,7 @@
         spacing: 10
         Label:
             font_size: 18
-            #text: 'Set Actual Nombre... si'
+            # font_name: 'fonts/Elegantwriter.ttf'
             text: 'Now learning: ' + str(root.set_loaded)
 
         Label:
@@ -32,30 +32,37 @@
 
         BoxLayout
             orientation: 'vertical'
-            size_hint: 0.1, 1
-            spacing: 20
+            size_hint: 0.15, 1
+            spacing: 30
 
             Button:
-                text: ' Show \n Cards (' + str(root.showcards_helper.remaining) + ')'
+                background_color: 112/255.,128/255.,144/255., 1
+                font_size: 14
+                font_name: 'fonts/Tequilla_sunrise.ttf'
+                text: '  Show \n Cards \n   -' + str(root.showcards_helper.remaining) + '-'
                 on_press: root.use_help('show')
 
             Button:
-                text: ' Guess \n Object (' + str(root.guessobj_helper.remaining) + ')'
-
+                background_color: 112/255.,128/255.,144/255., 1
+                font_size: 14
+                font_name: 'fonts/Tequilla_sunrise.ttf'
+                text: '  Guess \n Object \n   -' + str(root.guessobj_helper.remaining) + '-'
                 on_press: root.use_help('guess')
 
             PauseButton:
+                color: 112/255.,128/255.,144/255., 0.9
                 on_press: 
                     self.color = 187/255., 1, 23/255., 1
                     root.pause_game()
 
                 on_touch_up:
-                    self.color = 1, 1, 1, 1
+                    self.color = 112/255.,128/255.,144/255., 0.9
 
     Label:
         size_hint: 1, 0.05
         color: 1, 0, 0, 0.7
         markup: True
+        font_size: 14
         text: '[i]'+root.alert_msg+'[/i]'
 
 <ChiliGrid>:

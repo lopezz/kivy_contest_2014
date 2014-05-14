@@ -89,6 +89,8 @@ class ChiliWordCard(ChiliCard):
     def __init__(self, *args, **kwargs):
         super(ChiliWordCard, self).__init__(*args, **kwargs)
         self.front_widget = Label(text = kwargs['text'], pos = self.pos, size = self.size)
+        self.front_widget.font_size = 20
+        self.front_widget.font_name = 'fonts/atwriter.ttf'
 
     def guess(self):
         super(ChiliWordCard, self).guess()
