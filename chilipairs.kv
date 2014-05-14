@@ -35,18 +35,16 @@
             size_hint: 0.15, 1
             spacing: 30
 
-            Button:
-                background_color: 112/255.,128/255.,144/255., 1
-                font_size: 14
+            HelpButton:
+                text: ' Show \n Cards (' + str(root.showcards_helper.remaining) + ')'
                 font_name: 'fonts/Tequilla_sunrise.ttf'
-                text: '  Show \n Cards \n   -' + str(root.showcards_helper.remaining) + '-'
+                font_size: 14
                 on_press: root.use_help('show')
 
-            Button:
-                background_color: 112/255.,128/255.,144/255., 1
+            HelpButton:
                 font_size: 14
                 font_name: 'fonts/Tequilla_sunrise.ttf'
-                text: '  Guess \n Object \n   -' + str(root.guessobj_helper.remaining) + '-'
+                text: ' Guess \n Object (' + str(root.guessobj_helper.remaining) + ')'
                 on_press: root.use_help('guess')
 
             PauseButton:
@@ -142,6 +140,15 @@
     on_press: 
         self.parent.chiligame.new_game(self.set_id)
         self.parent.chiligame.hide_menu()
+
+<HelpButton@ButtonBehavior+Label>:
+    size_hint: 1, 0.2
+    canvas.before:
+        Color:
+            rgba: 1, 0, 0, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
 
 <PauseButton@ButtonBehavior+Image>:
     source: "img/ui/pause_btn.png"
