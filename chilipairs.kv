@@ -2,6 +2,11 @@
     orientation: 'vertical'
     chiligrid: _chiligrid
     padding: 5
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: "img/ui/bground.png"
 
     BoxLayout:
         orientation: 'horizontal'
