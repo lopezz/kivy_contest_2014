@@ -56,7 +56,9 @@ class ChiliPairsGame(BoxLayout):
 
     def new_game(self, set_id=-1):
         ''' Sets a new game and starts it '''
-        # TODO reset values
+        #Reset values
+        self.showcards_helper.remaining = 2
+        self.guessobj_helper.remaining = 5
         self.chiligrid.clear_widgets()
         self.chiligrid.can_flip_cards = True
         self.chiligrid.num_flipped_cards = 0
@@ -125,7 +127,7 @@ class ChiliPairsGame(BoxLayout):
         print "Stop Game"
         self.game_status = STOPPED
         Clock.unschedule(self.time_counter)
-        # TODO other stuff.
+        self.show_menu()
 
     def restart_game(self):
         ''' Restart the game  with the current set of cards.
