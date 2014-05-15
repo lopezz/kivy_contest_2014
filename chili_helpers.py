@@ -66,12 +66,12 @@ class ShowCardsHelper(Helper):
 
 class GuessObjectView(ModalView):
     ''' Widget for GuessObjectHelper '''
-    tinput = TextInput(text='', multiline=False, focus=True)
+    tinput = TextInput(text='', multiline=False, focus=True, font_size='30dp')
 
     def __init__(self, *args, **kwargs):
         super(GuessObjectView, self).__init__(*args, **kwargs)
         bx = BoxLayout(orientation='vertical') 
-        bx.add_widget(Label(text='Type Object name and press Enter'))
+        bx.add_widget(Label(text='Type Object name and press Enter', font_size='18dp'))
         bx.add_widget(self.tinput)
         #bx.add_widget(Button(text='Done'))
         self.add_widget(bx)
