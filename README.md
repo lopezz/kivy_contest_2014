@@ -7,13 +7,13 @@ In order to run this app, you need the following:
 
 1. Python 2.7.x 
 2. Pygame http://www.pygame.org/
-2. Kivy http://kivy.org/#download
+3. Kivy http://kivy.org/#download
 
 Credits
 -----------
 Sebastián López github.com/lopezz lopezcardona24@gmail.com
 
-Jason Molina github.com/jeysonmc jey.mco@gmail.com
+Jeyson Molina github.com/jeysonmc jey.mco@gmail.com
 
 
 How to play

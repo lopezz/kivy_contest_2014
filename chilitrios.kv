@@ -1,4 +1,7 @@
-<ChiliPairsGame>:
+#:kivy 1.8
+
+# Root
+<ChiliTriosGame>:
     orientation: 'vertical'
     chiligrid: _chiligrid
     padding: 5
@@ -50,7 +53,7 @@
                 color: 112/255.,128/255.,144/255., 0.9
                 on_press: 
                     self.color = 187/255., 1, 23/255., 1
-                    root.pause_game()
+                    root.pause()
 
                 on_touch_up:
                     self.color = 112/255.,128/255.,144/255., 0.9
@@ -61,6 +64,7 @@
         markup: True
         font_size: 14
         text: '[i]'+root.alert_msg+'[/i]'
+
 
 <ChiliGrid>:
     spacing: 10
@@ -97,7 +101,9 @@
                 size: self.size
                 source: root.back_img
 
+# Dynamic classes definitions
 
+# The main menu.
 <ChiliMenu@BoxLayout>:
     size: root.size
     pos: root.pos
@@ -133,13 +139,15 @@
             id: _continue_btn
             text: "Continue"
             disabled: True
-            on_press: root.chiligame.pause_game()
+            on_press: root.chiligame.pause()
 
         Button:
             id: _restart_btn
             text: "Restart"
             disabled: True
             on_press: root.chiligame.restart_game()
+
+
 
 <SetButton@ButtonBehavior+Label>:
     set_id: -1
@@ -154,6 +162,7 @@
         self.parent.chiligame.new_game(self.set_id)
         self.parent.chiligame.hide_menu()
 
+
 <HelpButton@Button>:
     size_hint: 1, 0.4
     background_color: 112/255.,128/255.,144/255., 1
@@ -164,27 +173,3 @@
 <PauseButton@ButtonBehavior+Image>:
     source: "img/ui/pause_btn.png"
     color: 1, 1, 1, 1
-
-[AccordionItemTitle@Button]:
-    text: ctx.title
-    canvas.before:
-        Color:
-            rgb: 1, 1, 1
-        BorderImage:
-            source:
-                ctx.item.background_normal \
-                if ctx.item.collapse \
-                else ctx.item.background_selected
-            pos: self.pos
-            size: self.size
-        PushMatrix
-        Translate:
-            xy: self.center_x, self.center_y
-        Rotate:
-            angle: 90 if ctx.item.orientation == 'horizontal' else 0
-            axis: 0, 0, 1
-        Translate:
-            xy: -self.center_x, -self.center_y
-    canvas.after:
-        PopMatrix
-    on_press: print "press"
