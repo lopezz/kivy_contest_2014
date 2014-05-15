@@ -156,7 +156,6 @@ class ChiliSoundCard(ChiliCard):
         if self.card_sound.state == 'stop':  # Play only if no sound is being
                                              # played.
             self.card_sound.play()
-            print "SOOOUND!!!!"
 
     def on_touch_up(self, touch):
         if (self.status == FLIPPED and self.collide_point(touch.x, touch.y))\

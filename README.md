@@ -1,13 +1,9 @@
 Chili Trios
 =================
 
-Chili Trios was developed in kyvy, the crossplatform framework for NUI
+Chili Trios was developed in kyvy, the crossplatform framework for NUI. 
 
-In order to run this app, you need the following:
-
-1. Python 2.7.x 
-2. Pygame http://www.pygame.org/
-3. Kivy http://kivy.org/#download
+It is an app based in the classic pairs game, modified in order to help people learn how to pronounce different words in english and associate them with image representations and the writting of the word itself.
 
 Credits
 -----------
@@ -17,6 +13,12 @@ Jeyson Molina github.com/jeysonmc jey.mco@gmail.com
 
 How to run
 -----------
+In order to run this app, you need the following:
+
+1. Python 2.7.x 
+2. Pygame http://www.pygame.org/
+3. Kivy http://kivy.org/#download
+
 Run main.py:
 
 ```
