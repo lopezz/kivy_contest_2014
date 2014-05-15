@@ -1,3 +1,20 @@
+'''
+ChiliTrios is a memory like game where you match trios of different cards
+ that represent a common object. Each card in the game can show an
+ image (object's appearance), text (object's name) and sound
+ (object's name pronunciation).
+
+The important files are:
+
+chili_trios_game.py: Defines root widget and main logic that controls the game.
+chili_grid.py: Defines grid widget that contains the cards.
+chili_card.py: Defines a ChiliCard and its flavours (image, text and sound).
+constants.py: Game constants.
+'''
+__author__ = "Sebastian Lopez (github.com/lopezz), " +\
+             "Jeyson Molina (github.com/jeysonmc)"
+__version__ = "1.0"
+
 import os
 os.environ['KIVY_AUDIO'] = 'pygame'  # Always use pygame
 from kivy.app import App

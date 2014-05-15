@@ -15,6 +15,13 @@ Sebastián López github.com/lopezz lopezcardona24@gmail.com
 
 Jeyson Molina github.com/jeysonmc jey.mco@gmail.com
 
+How to run
+-----------
+Run main.py:
+
+```
+python main.py
+```
 
 How to play
 -----------
