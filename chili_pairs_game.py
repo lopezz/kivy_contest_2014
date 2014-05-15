@@ -31,8 +31,7 @@ class ChiliPairsGame(BoxLayout):
         # Create Menu
         cmenu = Factory.ChiliMenu(chiligame=self)
         cmenu.chiligame = self
-        self.menu = Popup(title='CHILI TRIO', content=cmenu, size_hint=(None, None), size=(400, 400), auto_dismiss=False)
-        self.menu.content.set_options.add_widget(Factory.SetButton(text="Random")) # Random button
+        self.menu = Popup(title='CHILI TRIOS', content=cmenu, size_hint=(None, None), size=(400, 400), title_size='18sp',separator_height='4dp', separator_color=[0, 0.5, 1, 0.9], auto_dismiss=False)
         
         # Load sets
         sets = os.listdir('card_sets') 
@@ -45,6 +44,7 @@ class ChiliPairsGame(BoxLayout):
             set_menubtn.set_id = n
             self.menu.content.set_options.add_widget(set_menubtn)        
 
+        self.menu.content.set_options.add_widget(Factory.SetButton(text="Random")) # Random button
         # Helpers
         Helper.chiligame = self
         self.helpers = {'show': self.showcards_helper, 'guess': self.guessobj_helper}
