@@ -13,12 +13,15 @@
         size_hint: 1, 0.1
         spacing: 10
         Label:
-            font_size: 18
-            # font_name: 'fonts/Elegantwriter.ttf'
+            font_size: 18 
+            color: 128/255.,144/255.,22/255.,1
+            font_name: 'fonts/elegantwriter.ttf'
             text: 'Now learning: ' + str(root.set_loaded)
 
         Label:
             font_size: 18
+            color: 128/255.,144/255.,22/255.,1
+            font_name: 'fonts/elegantwriter.ttf'
             text: 'Time: ' + root.elapsed_time_str
 
     BoxLayout:
@@ -36,11 +39,11 @@
             spacing: 30
 
             HelpButton:
-                text: ' Show \n Cards -' + str(root.showcards_helper.remaining) + '-'
+                text: '  Show \n Cards \n   [color=DAA520]-' + str(root.showcards_helper.remaining) + '-[/color]'
                 on_press: root.use_help('show')
 
             HelpButton:
-                text: ' Guess \n Object -' + str(root.guessobj_helper.remaining) + '-'
+                text: '  Guess \n Object \n   [color=DAA520]-' + str(root.guessobj_helper.remaining) + '-[/color]'
                 on_press: root.use_help('guess')
 
             PauseButton:
@@ -152,9 +155,11 @@
         self.parent.chiligame.hide_menu()
 
 <HelpButton@Button>:
-    size_hint: 1, 0.2
+    size_hint: 1, 0.4
+    background_color: 112/255.,128/255.,144/255., 1
     font_name: 'fonts/Tequilla_sunrise.ttf'
     font_size: 14
+    markup: True
    
 <PauseButton@ButtonBehavior+Image>:
     source: "img/ui/pause_btn.png"

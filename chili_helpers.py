@@ -71,7 +71,7 @@ class GuessObjectView(ModalView):
     def __init__(self, *args, **kwargs):
         super(GuessObjectView, self).__init__(*args, **kwargs)
         bx = BoxLayout(orientation='vertical') 
-        bx.add_widget(Label(text='Type Object name in the box below and press Enter'))
+        bx.add_widget(Label(text='Type Object name and press Enter'))
         bx.add_widget(self.tinput)
         #bx.add_widget(Button(text='Done'))
         self.add_widget(bx)
