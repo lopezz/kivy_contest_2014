@@ -3,7 +3,7 @@ Chili Trios
 
 Chili Trios was developed in kyvy, the crossplatform framework for NUI. 
 
-It is an app based in the classic pairs game, modified in order to help people learn how to pronounce different words in english and associate them with image representations and the writting of the word itself.
+It is an app based in the classic pairs game, modified in order to help people learn how to pronounce different words in english and associate them with image representations and the writing of the word itself.
 
 Credits
 -----------
